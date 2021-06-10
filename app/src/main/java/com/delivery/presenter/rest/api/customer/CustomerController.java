@@ -52,7 +52,7 @@ public class CustomerController implements CustomerResource {
 
                     return ResponseEntity.created(location).body(customerDomainDtoMapper.mapToDto(outputValues.getCustomer()));
                 });
-        publishService.send("created user event", "execute-producer-out-0");
+        publishService.send("created user event", "producer-out-0");
         return response;
     }
 

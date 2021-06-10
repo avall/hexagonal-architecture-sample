@@ -11,14 +11,14 @@ spring:
     stream:
       default-binder: rabbit
       function:
-        definition: execute-consumer
+        definition: consumer
       bindings:
         # producers
-        execute-producer-out-0:
+        producer-out-0:
           destination: queue
 
         # consumer
-        execute-consumer-in-0:
+        consumer-in-0:
           destination: queue
 
       rabbit:

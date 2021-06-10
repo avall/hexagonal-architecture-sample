@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class StreamConfig {
 
-        @Bean("execute-consumer")
-        public Consumer<String> consume() {
-            return data -> {
-                System.out.println("Received: " + data);
+        @Bean
+        public Consumer<String> consumer() {
+            return event -> {
+                System.out.println("Event Received: " + event);
             };
         }
 }
