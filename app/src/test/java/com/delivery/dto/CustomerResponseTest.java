@@ -5,14 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.delivery.core.domain.Customer;
 import com.delivery.core.entities.TestCoreEntityGenerator;
 import com.delivery.presenter.mappers.domainDto.CustomerDomainDtoMapper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CustomerResponseTest {
     @InjectMocks private CustomerDomainDtoMapper customerDomainDbMapper  = Mockito.spy(Mappers.getMapper(CustomerDomainDtoMapper.class));
 

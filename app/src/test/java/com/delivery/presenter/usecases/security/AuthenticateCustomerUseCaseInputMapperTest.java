@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.delivery.dto.SignInRequest;
 import com.delivery.presenter.mappers.inputOutputDto.AuthenticateCustomerUseCaseInputMapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.delivery.core.domain.EmailAlreadyUsedException;
 import com.delivery.core.domain.NotFoundException;
 import com.delivery.dto.ApiResponse;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;

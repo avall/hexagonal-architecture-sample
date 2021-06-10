@@ -1,0 +1,198 @@
+version: '3.7'
+
+services:
+
+  #########################################
+  #           Rabbitmq
+  #########################################
+  rabbitmq:
+    container_name: rabbitmq-clean-demo
+    hostname: api-rabbit
+    image: rabbitmq:3.7.5-management
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  #########################################
+  #           ELK
+  #########################################
+  elasticsearch:
+    container_name: elasticsearch--clean-demo
+    user: elasticsearch:elasticsearch
+    build:
+      context: elasticsearch/
+      dockerfile: ./Dockerfile
+      args:
+        ELK_VERSION: 7.5.1
+    volumes:
+      - ./:/virtual_elastic
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: elasticsearch
+        target: /usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+      ALLOW_INSECURE_DEFAULT_TLS_CERT: "true"
+    command: >
+      bash -c "/usr/local/bin/docker-entrypoint.sh"
+
+  logstash:
+    container_name: logstash-o-clean-demo
+    build:
+      context: logstash/
+      dockerfile: ./Dockerfile
+      args:
+        ELK_VERSION: 7.5.1
+    volumes:
+      - ./:/virtual_logstash
+      - type: bind
+        source: ./logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    ports:
+      - "5002:5002"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+    depends_on:
+      - elasticsearch
+    command: >
+      bash -c "/usr/local/bin/docker-entrypoint"
+
+  kibana:
+    container_name: kibana--clean-demo
+    build:
+      context: kibana/
+      dockerfile: ./Dockerfile
+      args:
+        ELK_VERSION: 7.5.1
+    volumes:
+      - ./:/virtual_kibana
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    command: >
+      bash -c "/usr/local/bin/kibana-docker"
+
+  #########################################
+  #           Redis
+  #########################################
+#  redis:
+#    container_name: redis--clean-demo
+#    image: 'bitnami/redis:5.0'
+#    environment:
+#      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+#      - ALLOW_EMPTY_PASSWORD=yes
+#      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+#    ports:
+#      - '6379:6379'
+#    volumes:
+#      - 'redis_data:/bitnami/redis/data'
+
+
+  #########################################
+  #           Hazelcast
+  #########################################
+#  node1:
+#    container_name: hazelcast-clean-demo
+#    image: hazelcast/hazelcast:3.12.5
+#    ports:
+#      - 9000:8081
+#      - 5701:5701
+#    volumes:
+#      - ../hazelcast/:/configFolder
+#    environment:
+#      - JAVA_OPTS=-Dhazelcast.config=/configFolder/hazelcast.xml -Dserver.port=8081 -Dhazelcast.mancenter.url=http://management_center:8080/hazelcast-mancenter -Dgroup.name=financefox -Dgroup.password=Wefox1010
+#    depends_on:
+#      - management_center
+#
+#  management_center:
+#    container_name: hazelcast-management-center-oneback-contract-one
+#    image: hazelcast/management-center:3.12.5
+#    ports:
+#      - 9080:8080
+#    depends_on:
+#      - elasticsearch
+
+  #########################################
+  #           Keycloak
+  #########################################
+#  postgres:
+#    container_name: postgres-clean-demo
+#    image: postgres
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    environment:
+#      POSTGRES_DB: wefox
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#    ports:
+#     - 5432:5432
+#
+#  keycloak:
+#    container_name: keycloak--clean-demo
+#    #image: jboss/keycloak:10.0.2
+#    build:
+#          context: keycloak/
+#          dockerfile: ./Dockerfile
+#          args:
+#            KEYCLOAK_VERSION: 10.0.2
+#    environment:
+#      DB_VENDOR: POSTGRES
+#      DB_ADDR: postgres
+#      DB_DATABASE: wefox
+#      DB_USER: user
+#      DB_SCHEMA: public
+#      DB_PASSWORD: password
+#      KEYCLOAK_USER: admin
+#      KEYCLOAK_PASSWORD: admin
+#    # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn’t be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+#    #JDBC_PARAMS: “ssl=true”
+#    ports:
+#      - 8880:8080
+#    depends_on:
+#      - postgres
+
+
+#  java:
+#    build:
+#      context: ..
+#      dockerfile: ./docker/java/Dockerfile
+#      args:
+#        MAVEN_REPO_PASSWORD: ${MAVEN_REPO_PASSWORD}
+#    volumes:
+#      - .:/app
+#      - ~/.m2:/root/.m2
+#    working_dir: /app
+#    ports:
+#      - 8080:8080
+#      - 5005:5005
+#    depends_on:
+#      - rabbitmq
+#      #      - mysql
+##      - postgres
+
+
+volumes:
+  elasticsearch:
+  #  sql-data:
+  redis_data:
+    driver: local  
+#  postgres_data:
+#    driver: local

@@ -6,6 +6,7 @@ import com.delivery.dto.AuthenticationResponse;
 import com.delivery.dto.CustomerResponse;
 import com.delivery.dto.SignInRequest;
 import com.delivery.dto.SignUpRequest;
+import com.delivery.presenter.binding.PublisherService;
 import com.delivery.presenter.mappers.domainDto.CustomerDomainDtoMapper;
 import com.delivery.presenter.mappers.inputOutputDto.AuthenticateCustomerUseCaseInputMapper;
 import com.delivery.presenter.mappers.inputOutputDto.AuthenticateCustomerUseCaseOutputMapper;
@@ -33,11 +34,13 @@ public class CustomerController implements CustomerResource {
     private final AuthenticateCustomerUseCaseInputMapper authenticateCustomerUseCaseInputMapper;
     private final AuthenticateCustomerUseCaseOutputMapper authenticateCustomerUseCaseOutputMapper;
     private final CustomerDomainDtoMapper customerDomainDtoMapper;
+    private final PublisherService publishService;
 
     @Override
     public CompletableFuture<ResponseEntity<CustomerResponse>> signUp(@Valid @RequestBody SignUpRequest signUpRequest,
                                                                  HttpServletRequest httpServletRequest) {
-        return useCaseExecutor.execute(
+
+        CompletableFuture<ResponseEntity<CustomerResponse>> response = useCaseExecutor.execute(
                 createCustomerUseCase,
                 createCustomerUseCaseInputMapper.map(signUpRequest),
                 (outputValues) -> {
@@ -49,6 +52,8 @@ public class CustomerController implements CustomerResource {
 
                     return ResponseEntity.created(location).body(customerDomainDtoMapper.mapToDto(outputValues.getCustomer()));
                 });
+        publishService.send("created user event", "execute-producer-out-0");
+        return response;
     }
 
     @Override

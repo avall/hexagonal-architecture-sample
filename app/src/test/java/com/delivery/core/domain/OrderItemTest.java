@@ -3,7 +3,7 @@ package com.delivery.core.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.delivery.core.entities.TestCoreEntityGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OrderItemTest {
 

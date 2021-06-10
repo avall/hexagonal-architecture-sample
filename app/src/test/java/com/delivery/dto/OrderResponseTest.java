@@ -11,14 +11,14 @@ import com.delivery.presenter.mappers.domainDto.OrderDomainDtoMapper;
 import com.delivery.presenter.mappers.domainDto.OrderItemDomainDtoMapper;
 import com.delivery.presenter.mappers.domainDto.ProductDomainDtoMapper;
 import com.delivery.presenter.mappers.domainDto.StoreDomainDtoMapper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class OrderResponseTest {
     @InjectMocks private OrderItemDomainDtoMapper orderItemDomainDtoMapper = Mockito.spy(Mappers.getMapper(OrderItemDomainDtoMapper.class));
     @InjectMocks private CustomerDomainDtoMapper customerDomainDtoMapper = Mockito.spy(Mappers.getMapper(CustomerDomainDtoMapper.class));

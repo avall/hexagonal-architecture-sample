@@ -13,7 +13,7 @@ import com.delivery.dto.OrderRequest;
 import com.delivery.dto.OrderRequestItem;
 import com.delivery.presenter.mappers.inputOutputDto.CreateOrderInputMapper;
 import com.delivery.presenter.usecases.security.UserPrincipal;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 public class InputValuesMapperTest {

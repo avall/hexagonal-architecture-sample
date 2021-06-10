@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.delivery.TestEntityGenerator;
 import com.delivery.core.domain.Identity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class IdConverterTest {
 

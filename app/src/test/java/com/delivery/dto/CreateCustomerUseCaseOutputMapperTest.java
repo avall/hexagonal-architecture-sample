@@ -7,7 +7,7 @@ import com.delivery.core.entities.TestCoreEntityGenerator;
 import com.delivery.presenter.mappers.inputOutputDto.CreateCustomerUseCaseOutputMapper;
 import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

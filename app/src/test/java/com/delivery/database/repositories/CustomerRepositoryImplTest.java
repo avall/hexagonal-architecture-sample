@@ -9,15 +9,15 @@ import com.delivery.core.domain.Customer;
 import com.delivery.core.entities.TestCoreEntityGenerator;
 import com.delivery.core.mappers.CustomerDomainDbMapper;
 import com.delivery.database.repositories.impl.CustomerRepositoryImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CustomerRepositoryImplTest {
 
     @InjectMocks private CustomerRepositoryImpl customerRepository;

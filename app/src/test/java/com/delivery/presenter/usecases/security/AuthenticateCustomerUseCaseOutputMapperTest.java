@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.delivery.dto.AuthenticationResponse;
 import com.delivery.presenter.mappers.inputOutputDto.AuthenticateCustomerUseCaseOutputMapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -25,11 +25,12 @@ import com.delivery.presenter.rest.api.common.BaseControllerTest;
 import com.delivery.presenter.usecases.UseCaseExecutorImpl;
 import com.delivery.presenter.usecases.security.AuthenticateCustomerUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,12 +39,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = CustomerController.class, secure = false)
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(value = CustomerController.class,  excludeAutoConfiguration = SecurityAutoConfiguration.class)
 public class CustomerControllerTest extends BaseControllerTest {
 
     @Configuration
@@ -82,7 +84,7 @@ public class CustomerControllerTest extends BaseControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JacksonTester.initFields(this, new ObjectMapper());
     }

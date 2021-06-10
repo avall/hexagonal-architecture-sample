@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.delivery.core.mappers.CustomerDomainDbMapper;
 import com.delivery.database.entities.CustomerDb;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 public class UserPrincipalTest {
